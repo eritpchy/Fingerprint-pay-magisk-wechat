@@ -40,3 +40,6 @@ Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerpri
 * [SandHook](https://github.com/ganyao114/SandHook)
 * [EdXposed](https://github.com/ElderDrivers/EdXposed)
 * [Magisk](https://github.com/topjohnwu/Magisk)
+
+![qq](https://github.com/eritpchy/Xposed-Fingerprint-pay/raw/master/doc/qqGroup.png)
+#### QQ交流群: [665167891](http://shang.qq.com/wpa/qunwpa?idkey=91c2cd8f14532413701607c364f03f43afa1539a24b96b8907c92f3c018894e5)
