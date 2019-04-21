@@ -41,7 +41,7 @@ LATESTARTSERVICE=false
 
 print_modname() {
   ui_print "*******************************"
-  ui_print " Riru - Module template    "
+  ui_print " Riru - Module Fingerprint pay for WeChat    "
   ui_print "*******************************"
 }
 

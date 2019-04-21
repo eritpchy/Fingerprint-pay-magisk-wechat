@@ -1,0 +1,7 @@
+id=riru-module-xfingerprint-pay-wechat
+name=指纹支付-微信
+version=v3.9.2
+versionCode=1
+author=Jason Eric
+description=让微信支持指纹支付 Fingerprint pay for wechat
+minMagisk=17000
