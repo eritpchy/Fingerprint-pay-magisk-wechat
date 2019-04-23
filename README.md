@@ -4,6 +4,12 @@
 
 Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerprint-pay)
 
+[Magisk QQ指纹支付](https://github.com/eritpchy/Fingerprint-pay-magisk-qq)
+
+[Magisk 淘宝指纹支付](https://github.com/eritpchy/Fingerprint-pay-magisk-taobao)
+
+[Magisk 支付宝指纹支付](https://github.com/eritpchy/Fingerprint-pay-magisk-alipay)
+
 ## 最低要求
 
 * Root 过的 Android 6.0+ 设备
