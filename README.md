@@ -1,6 +1,6 @@
 # Magisk 微信指纹支付 (Fingerprint pay for WeChat)
 
-通过事先录入支付密码, 加密保存至本地，然后支付时调用系统指纹授权自动填写支付密码
+通过事先录入支付密码, 加密保存至本地, 然后支付时调用系统指纹授权自动填写支付密码
 
 Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerprint-pay)
 
