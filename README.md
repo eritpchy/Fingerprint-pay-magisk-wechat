@@ -20,7 +20,6 @@ Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerpri
 
 1. 利用 [Magisk](https://github.com/topjohnwu/Magisk) 的 [Riru](https://github.com/RikkaApps/Riru) 注入 zygote 进程
 2. 加载指纹支付代码
-3. 利用 [SandHook](https://github.com/ganyao114/SandHook) 完成注入功能
 
 ## 为什么要做出这个呢?
 
@@ -45,7 +44,6 @@ Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerpri
 ## 致谢
 
 * [Riru](https://github.com/RikkaApps/Riru)
-* [SandHook](https://github.com/ganyao114/SandHook)
 * [EdXposed](https://github.com/ElderDrivers/EdXposed)
 * [Magisk](https://github.com/topjohnwu/Magisk)
 

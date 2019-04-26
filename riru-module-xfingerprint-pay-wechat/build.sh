@@ -15,8 +15,4 @@ function copy_files {
   
   7za e -o$TMP_DIR_MAGISK/system/framework/ $MODULE_NAME/libs/fingerprint-pay-wechat-magisk.apk classes.dex
   mv -f $TMP_DIR_MAGISK/system/framework/classes.dex $TMP_DIR_MAGISK/system/framework/libxfingerprint_pay_wechat.dex
-  7za e -o$TMP_DIR_MAGISK/system/lib/ $MODULE_NAME/libs/fingerprint-pay-wechat-magisk.apk lib/armeabi-v7a/libsandhook.so
-  mv -f $TMP_DIR_MAGISK/system/lib/libsandhook.so $TMP_DIR_MAGISK/system/lib/libxfingerprint_pay_wechat.so
-  7za e -o$TMP_DIR_MAGISK/system/lib64/ $MODULE_NAME/libs/fingerprint-pay-wechat-magisk.apk lib/arm64-v8a/libsandhook.so
-  mv -f $TMP_DIR_MAGISK/system/lib64/libsandhook.so $TMP_DIR_MAGISK/system/lib64/libxfingerprint_pay_wechat.so
 }
