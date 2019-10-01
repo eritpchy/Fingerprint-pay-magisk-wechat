@@ -30,8 +30,8 @@ Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerpri
 
 ## 如何使用
 
-1. 下载 [magisk-riru-core.zip](https://github.com/RikkaApps/Riru/releases) ([百度网盘5ahh](https://pan.baidu.com/s/1NYjx2iOg-rpqbUTErzgg4Q)) 进手机
-2. 下载 [magisk-riru-module-xfingerprint-pay-wechat.zip](https://github.com/eritpchy/Fingerprint-pay-magisk-wechat/releases) ([百度网盘5ahh](https://pan.baidu.com/s/1NYjx2iOg-rpqbUTErzgg4Q)) 进手机
+1. 下载 [magisk-riru-core.zip](https://github.com/RikkaApps/Riru/releases) ([百度网盘k2w6](https://pan.baidu.com/s/1nup0juMoUVYRjnUN6HOmlQ)) 进手机
+2. 下载 [magisk-riru-module-xfingerprint-pay-wechat.zip](https://github.com/eritpchy/Fingerprint-pay-magisk-wechat/releases) ([百度网盘k2w6](https://pan.baidu.com/s/1nup0juMoUVYRjnUN6HOmlQ)) 进手机
 3. 进入 Magisk Manager, 模块, 安装这两个模块, 不要重启
 4. 勾选启用两个模块, 重启手机
 5. Enjoy
