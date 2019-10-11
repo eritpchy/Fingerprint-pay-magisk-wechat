@@ -18,8 +18,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         boolean init, isZygoteMethodsReplaced;
-        int version, nativeForkAndSpecializeCallsCount, nativeForkSystemServerCallsCount;
-        String nativeForkAndSpecializeSignature, nativeSpecializeBlastulaSignature, nativeForkSystemServerSignature;
+        int version, nativeForkAndSpecializeCallsCount, nativeForkSystemServerCallsCount, nativeSpecializeAppProcessCallsCount;
+        String nativeForkAndSpecializeSignature, nativeSpecializeAppProcessSignature, nativeForkSystemServerSignature;
 
         StringBuilder sb = new StringBuilder();
 
@@ -32,8 +32,9 @@ public class MainActivity extends BaseActivity {
                 isZygoteMethodsReplaced = NativeHelper.isZygoteMethodsReplaced();
                 nativeForkAndSpecializeCallsCount = NativeHelper.getNativeForkAndSpecializeCallsCount();
                 nativeForkSystemServerCallsCount = NativeHelper.getNativeForkSystemServerCallsCount();
+                nativeSpecializeAppProcessCallsCount = NativeHelper.getNativeSpecializeAppProcessCallsCount();
                 nativeForkAndSpecializeSignature = NativeHelper.getNativeForkAndSpecializeSignature();
-                nativeSpecializeBlastulaSignature = NativeHelper.getNativeSpecializeBlastulaSignature();
+                nativeSpecializeAppProcessSignature = NativeHelper.getNativeSpecializeAppProcessSignature();
                 nativeForkSystemServerSignature = NativeHelper.getNativeForkSystemServerSignature();
 
                 sb.append("Riru ").append(NativeHelper.versionName(this, version)).append(" found.").append("<br>");
@@ -41,17 +42,19 @@ public class MainActivity extends BaseActivity {
                 if (isZygoteMethodsReplaced) {
                     sb.append("Native methods of Zygote class replaced.").append("<br><br>")
                             .append("nativeForkAndSpecialize calls count: ").append(nativeForkAndSpecializeCallsCount).append("<br>")
-                            .append("nativeForkSystemServer calls count: ").append(nativeForkSystemServerCallsCount).append("<br>");
+                            .append("nativeForkSystemServer calls count: ").append(nativeForkSystemServerCallsCount).append("<br>")
+                            .append("nativeSpecializeAppProcess calls count: ").append(nativeSpecializeAppProcessCallsCount).append("<br>");
 
-                    if (nativeForkAndSpecializeCallsCount == 0) {
-                        sb.append("<br>nativeForkAndSpecialize calls count is 0, Riru is not working correctly.<br>This may because Riru's hook is overwritten by other things, please check yourself.");
+                    if (nativeForkAndSpecializeCallsCount <= 0 && nativeSpecializeAppProcessCallsCount <= 0) {
+                        sb.append("<br>nativeForkAndSpecialize/nativeSpecializeAppProcess calls count is 0, Riru is not working correctly.<br>This may because Riru's hook is overwritten by other things, please check yourself.");
                     } else if (nativeForkSystemServerCallsCount != 0) {
                         sb.append("<br>Everything looks fine :D");
                     }
                 } else {
                     sb.append("However, native methods of Zygote class not replaced, please contact developer with the following information.").append("<br><br>")
                             .append("nativeForkAndSpecializeSignature:<br><font face=\"monospace\">").append(nativeForkAndSpecializeSignature).append("</font><br><br>")
-                            .append("getNativeForkSystemServerSignature:<br><font face=\"monospace\">").append(nativeForkSystemServerSignature).append("</font>");
+                            .append("nativeSpecializeAppProcessSignature (from Q beta 3):<br><font face=\"monospace\">").append(nativeSpecializeAppProcessSignature).append("</font><br><br>")
+                            .append("nativeForkSystemServerSignature:<br><font face=\"monospace\">").append(nativeForkSystemServerSignature).append("</font>");
                 }
             }
         } else {
@@ -76,7 +79,7 @@ public class MainActivity extends BaseActivity {
         Log.i("RiruManager", "getNativeForkAndSpecializeCallsCount: " + NativeHelper.getNativeForkAndSpecializeCallsCount());
         Log.i("RiruManager", "getNativeForkSystemServerCallsCount: " + NativeHelper.getNativeForkSystemServerCallsCount());
         Log.i("RiruManager", "getNativeForkAndSpecializeSignature: " + NativeHelper.getNativeForkAndSpecializeSignature());
-        Log.i("RiruManager", "getNativeSpecializeBlastulaSignature: " + NativeHelper.getNativeSpecializeBlastulaSignature());
+        Log.i("RiruManager", "getNativeSpecializeAppProcessSignature: " + NativeHelper.getNativeSpecializeAppProcessSignature());
         Log.i("RiruManager", "getNativeForkSystemServerSignature: " + NativeHelper.getNativeForkSystemServerSignature());
     }
 }
