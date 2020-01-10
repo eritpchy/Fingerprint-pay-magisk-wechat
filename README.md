@@ -38,8 +38,8 @@ Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerpri
 
 ## 编译
 
-1. 运行./gradlew :riru-module-xfingerprint-pay-wechat:zip
-2. 编译文件位于./release
+1. 运行./gradlew :module:assembleRelease
+2. 编译文件位于./out
 
 ## 致谢
 

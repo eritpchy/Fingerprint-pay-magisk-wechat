@@ -1,3 +1,2 @@
 *.prop text eol=lf
 *.sh text eol=lf
-gradle/wrapper/gradle-4.10.1-all.zip filter=lfs diff=lfs merge=lfs -text
