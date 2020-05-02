@@ -1,10 +1,17 @@
 apply plugin: 'com.android.library'
+apply from: file(rootProject.file('module.gradle'))
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+
+        externalNativeBuild {
+            cmake {
+                arguments "-DMODULE_NAME:STRING=riru_$moduleId"
+            }
+        }
         ndk {
             abiFilters "armeabi-v7a", 'arm64-v8a', 'x86', 'x86_64'
         }       
@@ -17,29 +24,10 @@ android {
     }
 }
 
-def moduleId = "module_xfingerprint_pay_wechat"
-def moduleProp = [
-        name       : "指纹支付 - 微信",
-        version    : "v3.9.7",
-        versionCode: "1",
-        author     : "Jason Eric",
-        description: "让微信支持指纹支付 Fingerprint pay for wechat.",
-        api        : 4
-]
-
-def magiskModuleProp = [
-        id         : "riru-${moduleId.replace('_', '-')}",
-        name       : "Riru - ${moduleProp['name']}",
-        version    : moduleProp['version'],
-        versionCode: moduleProp['versionCode'],
-        author     : moduleProp['author'],
-        description: moduleProp['description']
-]
-
 def outDir = file("$rootDir/out")
 def magiskDir = file("$outDir/magisk_module")
-def zipName = "magisk-${magiskModuleProp['id']}-${magiskModuleProp['version']}.zip"
-def riruDir = "$magiskDir/data/misc/riru/modules/${moduleId}"
+def zipName = "magisk-${magiskModuleProp['id'].replace('_', '-')}-${magiskModuleProp['version']}.zip"
+def riruDir = "$magiskDir/riru"
 
 import java.nio.file.Files
 import java.security.MessageDigest
@@ -58,6 +46,8 @@ static def renameOrFail(File from, File to) {
     }
 }
 
+import org.apache.tools.ant.filters.FixCrLfFilter
+
 android.libraryVariants.all { variant ->
     def task = variant.assembleProvider.get()
     task.doLast {
@@ -68,6 +58,19 @@ android.libraryVariants.all { variant ->
         copy {
             from "$rootDir/template/magisk_module"
             into magiskDir.path
+            exclude 'riru.sh'
+        }
+        // copy riru.sh
+        copy {
+            from "$rootDir/template/magisk_module"
+            into magiskDir.path
+            include 'riru.sh'
+            filter { line ->
+                line.replaceAll('%%%RIRU_MODULE_ID%%%', moduleId)
+                        .replaceAll('%%%RIRU_MIN_API_VERSION%%%', riruApiVersion.toString())
+            }
+            filter(FixCrLfFilter.class,
+                    eol: FixCrLfFilter.CrLf.newInstance("lf"))
         }
         // copy .git files manually since gradle exclude it by default
         Files.copy(file("$rootDir/template/magisk_module/.gitattributes").toPath(), file("${magiskDir.path}/.gitattributes").toPath())
@@ -100,7 +103,7 @@ android.libraryVariants.all { variant ->
         file("$magiskDir/system/framework").mkdirs()
         copy {
             from zipTree('libs/fingerprint-pay-wechat-magisk.apk')
-            rename('classes.dex', 'libxfingerprint_pay_wechat.dex')
+            rename('classes.dex', 'libriru_module_xfingerprint_pay_wechat.dex')
             into file("$magiskDir/system/framework")
             include 'classes.dex'
         }

@@ -1,0 +1,22 @@
+ext {
+    moduleId = "module_xfingerprint_pay_wechat"
+    riruApiVersion = 4
+
+    moduleProp = [
+            name       : "指纹支付 - 微信",
+            version    : "v3.9.10",
+            versionCode: "1",
+            author     : "Jason Eric",
+            description: "让微信支持指纹支付 Fingerprint pay for WeChat.",
+            api        : riruApiVersion
+    ]
+
+    magiskModuleProp = [
+            id         : "riru-${moduleId.replace('_', '-')}",
+            name       : "Riru - ${moduleProp['name']}",
+            version    : moduleProp['version'],
+            versionCode: moduleProp['versionCode'],
+            author     : moduleProp['author'],
+            description: moduleProp['description']
+    ]
+}

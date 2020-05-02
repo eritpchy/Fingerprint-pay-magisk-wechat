@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-set(MODULE_NAME "riru_module_xfingerprint_pay_wechat")
+if (NOT DEFINED MODULE_NAME)
+    message(FATAL_ERROR "MODULE_NAME is not set")
+endif ()
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
