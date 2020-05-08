@@ -36,6 +36,8 @@ Magisk 版 [Xposed Fingerprint pay](https://github.com/eritpchy/Xposed-Fingerpri
 4. 勾选启用两个模块, 重启手机
 5. Enjoy
 
+    [图文教程](https://github.com/eritpchy/Xposed-Fingerprint-pay/tree/master/doc/WeChat)
+
 ## 编译
 
 1. 运行./gradlew :module:assembleRelease
