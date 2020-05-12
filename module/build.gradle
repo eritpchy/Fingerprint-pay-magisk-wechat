@@ -68,6 +68,7 @@ android.libraryVariants.all { variant ->
             filter { line ->
                 line.replaceAll('%%%RIRU_MODULE_ID%%%', moduleId)
                         .replaceAll('%%%RIRU_MIN_API_VERSION%%%', riruApiVersion.toString())
+                        .replaceAll('%%%RIRU_MIN_VERSION_NAME%%%', riruMinVersionName)
             }
             filter(FixCrLfFilter.class,
                     eol: FixCrLfFilter.CrLf.newInstance("lf"))

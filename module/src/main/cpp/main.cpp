@@ -86,22 +86,11 @@ static void loadDex(JNIEnv *env, jstring jdexPath, jstring jodexPath, jstring jc
         LOGD("target method(%s) not found", methodName);
         return;
     }
-    
+
     env->CallStaticVoidMethod(javaClientClass, targetMethod, jarg1);
 }
 
-
-// You can remove functions you don't need
-
-extern "C" {
-#define EXPORT __attribute__((visibility("default"))) __attribute__((used))
-EXPORT void nativeForkAndSpecializePre(
-        JNIEnv *env, jclass clazz, jint *_uid, jint *gid, jintArray *gids, jint *runtimeFlags,
-        jobjectArray *rlimits, jint *mountExternal, jstring *seInfo, jstring *niceName,
-        jintArray *fdsToClose, jintArray *fdsToIgnore, jboolean *is_child_zygote,
-        jstring *instructionSet, jstring *appDataDir, jstring *packageName,
-        jobjectArray *packagesForUID, jstring *sandboxId) {
-    // packageName, packagesForUID, sandboxId are added from Android Q beta 2, removed from beta 5
+static void pre(JNIEnv *env, jstring *appDataDir, jstring *niceName) {
     char *cAppDataDir = jstringToC(env, *appDataDir);
     if (cAppDataDir == NULL) {
         LOGD("MEM ERR");
@@ -120,25 +109,43 @@ EXPORT void nativeForkAndSpecializePre(
     }
 }
 
-EXPORT int nativeForkAndSpecializePost(JNIEnv *env, jclass clazz, jint res) {
-    if (res == 0) {
-        // in app process
-        if (sHookEnable) {
-            char appCacheDir[PATH_MAX] = {0};
-            snprintf(appCacheDir, PATH_MAX - 1, "%s/cache", sAppDataDir);
+static void post(JNIEnv *env) {
+    if (sHookEnable) {
+        char appCacheDir[PATH_MAX] = {0};
+        snprintf(appCacheDir, PATH_MAX - 1, "%s/cache", sAppDataDir);
 
-            const char *dexPath = "/data/local/tmp/libriru_module_xfingerprint_pay_wechat.dex";
-            if (access(dexPath, 0) != 0) {
-                dexPath = "/system/framework/libriru_module_xfingerprint_pay_wechat.dex";
-            }
-            loadDex(env,
+        const char *dexPath = "/data/local/tmp/libriru_module_xfingerprint_pay_wechat.dex";
+        if (access(dexPath, 0) != 0) {
+            dexPath = "/system/framework/libriru_module_xfingerprint_pay_wechat.dex";
+        }
+        loadDex(env,
                 env->NewStringUTF(dexPath),
                 env->NewStringUTF(appCacheDir),
                 env->NewStringUTF("com.yyxx.wechatfp.xposed.plugin.XposedWeChatPlugin"),
                 "main",
                 env->NewStringUTF(sAppDataDir)
-            );
-        }
+        );
+    }
+}
+
+// You can remove functions you don't need
+
+extern "C" {
+#define EXPORT __attribute__((visibility("default"))) __attribute__((used))
+EXPORT void nativeForkAndSpecializePre(
+        JNIEnv *env, jclass clazz, jint *_uid, jint *gid, jintArray *gids, jint *runtimeFlags,
+        jobjectArray *rlimits, jint *mountExternal, jstring *seInfo, jstring *niceName,
+        jintArray *fdsToClose, jintArray *fdsToIgnore, jboolean *is_child_zygote,
+        jstring *instructionSet, jstring *appDataDir, jboolean *isTopApp, jobjectArray *pkgDataInfoList,
+        jobjectArray *whitelistedDataInfoList, jboolean *bindMountAppDataDirs, jboolean *bindMountAppStorageDirs) {
+    // packageName, packagesForUID, sandboxId are added from Android Q beta 2, removed from beta 5
+    pre(env, appDataDir, niceName);
+}
+
+EXPORT int nativeForkAndSpecializePost(JNIEnv *env, jclass clazz, jint res) {
+    if (res == 0) {
+        // in app process
+        post(env);
     } else {
         // in zygote process, res is child pid
         // don't print log here, see https://github.com/RikkaApps/Riru/blob/77adfd6a4a6a81bfd20569c910bc4854f2f84f5e/riru-core/jni/main/jni_native_method.cpp#L55-L66
@@ -150,15 +157,16 @@ EXPORT __attribute__((visibility("default"))) void specializeAppProcessPre(
         JNIEnv *env, jclass clazz, jint *_uid, jint *gid, jintArray *gids, jint *runtimeFlags,
         jobjectArray *rlimits, jint *mountExternal, jstring *seInfo, jstring *niceName,
         jboolean *startChildZygote, jstring *instructionSet, jstring *appDataDir,
-        jstring *packageName, jobjectArray *packagesForUID, jstring *sandboxId) {
-    // this is added from Android Q beta, but seems Google disabled this in following updates
-
-    // packageName, packagesForUID, sandboxId are added from Android Q beta 2, removed from beta 5
+        jboolean *isTopApp, jobjectArray *pkgDataInfoList, jobjectArray *whitelistedDataInfoList,
+        jboolean *bindMountAppDataDirs, jboolean *bindMountAppStorageDirs) {
+    // added from Android 10, but disabled at least in Google Pixel devices
+    pre(env, appDataDir, niceName);
 }
 
 EXPORT __attribute__((visibility("default"))) int specializeAppProcessPost(
         JNIEnv *env, jclass clazz) {
-    // this is added from Android Q beta, but seems Google disabled this in following updates
+    // added from Android 10, but disabled at least in Google Pixel devices
+    post(env);
     return 0;
 }
 
