@@ -63,6 +63,8 @@ rm -f "$RIRU_MODULE_PATH/module.prop.new"
 extract "$ZIPFILE" 'riru/module.prop.new' "$RIRU_MODULE_PATH" true
 set_perm "$RIRU_MODULE_PATH/module.prop.new" 0 0 0600
 
+cp -f "$RIRU_MODULE_PATH/module.prop.new" "$RIRU_MODULE_PATH/module.prop"
+
 # set permissions
 ui_print "- Setting permissions"
 set_perm_recursive "$MODPATH" 0 0 0755 0644
