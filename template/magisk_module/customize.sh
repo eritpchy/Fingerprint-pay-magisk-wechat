@@ -46,6 +46,7 @@ else
   fi
 fi
 
+ui_print "- Extracting extra libraries"
 extract "$ZIPFILE" "system/framework/libriru_$RIRU_MODULE_ID.dex" "$MODPATH"
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644
@@ -56,4 +57,5 @@ ui_print "- Extracting extra files"
 
 rm -f "$RIRU_MODULE_PATH/module.prop.new"
 extract "$ZIPFILE" 'riru/module.prop.new' "$RIRU_MODULE_PATH" true
+cp -f "$RIRU_MODULE_PATH/module.prop.new" "$RIRU_MODULE_PATH/module.prop"
 set_perm "$RIRU_MODULE_PATH/module.prop.new" 0 0 0600 $RIRU_SECONTEXT
