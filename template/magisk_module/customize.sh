@@ -7,7 +7,7 @@ if [ ! -f "$TMPDIR/verify.sh" ]; then
   ui_print    "*********************************************************"
   ui_print    "! Unable to extract verify.sh!"
   ui_print    "! This zip may be corrupted, please try downloading again"
-  abort_clean "*********************************************************"
+  abort "*********************************************************"
 fi
 . $TMPDIR/verify.sh
 
@@ -46,25 +46,14 @@ else
   fi
 fi
 
-ui_print "- Extracting extra libraries"
 extract "$ZIPFILE" "system/framework/libriru_$RIRU_MODULE_ID.dex" "$MODPATH"
 
-# Riru files
-ui_print "- Extracting extra files"
-[ -d "$RIRU_MODULE_PATH" ] || mkdir -p "$RIRU_MODULE_PATH" || abort_clean "! Can't create $RIRU_MODULE_PATH"
+set_perm_recursive "$MODPATH" 0 0 0755 0644
 
-# set permission just in case
-set_perm "$RIRU_PATH" 0 0 0700
-set_perm "$RIRU_PATH/modules" 0 0 0700
-set_perm "$RIRU_MODULE_PATH" 0 0 0700
-set_perm "$RIRU_MODULE_PATH/bin" 0 0 0700
+# extract Riru files
+ui_print "- Extracting extra files"
+[ -d "$RIRU_MODULE_PATH" ] || mkdir -p "$RIRU_MODULE_PATH" || abort "! Can't create $RIRU_MODULE_PATH"
 
 rm -f "$RIRU_MODULE_PATH/module.prop.new"
 extract "$ZIPFILE" 'riru/module.prop.new' "$RIRU_MODULE_PATH" true
-set_perm "$RIRU_MODULE_PATH/module.prop.new" 0 0 0600
-
-cp -f "$RIRU_MODULE_PATH/module.prop.new" "$RIRU_MODULE_PATH/module.prop"
-
-# set permissions
-ui_print "- Setting permissions"
-set_perm_recursive "$MODPATH" 0 0 0755 0644
+set_perm "$RIRU_MODULE_PATH/module.prop.new" 0 0 0600 $RIRU_SECONTEXT
